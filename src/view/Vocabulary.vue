@@ -129,6 +129,20 @@ function shuffle(arr: Array<any>) {
     return arr;
 }
 
+function speakWord(word: string) {
+    if ('speechSynthesis' in window) {
+        // 停止当前正在播放的语音
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US'; // 设置为英语
+        utterance.rate = 0.8; // 语速稍慢一点
+        utterance.volume = 0.7; // 音量
+        
+        window.speechSynthesis.speak(utterance);
+    }
+}
+
 async function loadVocabulary(name: string) {
     // Find the group and module that contains the selected vocabulary
     for (const group of Object.values(VOCABULARY_IMPORTS)) {
@@ -258,8 +272,13 @@ function reloadPage() {
     currentVocabulary.value = [...currentVocabulary.value] // Create new array to trigger reactivity
 }
 
+function handleWordHover(word: string) {
+    speakWord(word);
+}
+
 // Update handleWordClick to accept event and check isSlashPressed
 function handleWordClick(word: string, event?: MouseEvent) {
+    speakWord(word);
     if (isSlashPressed.value) {
         if (knownWordsSet.value.has(word)) {
             deleteKnownWord(word);
@@ -372,6 +391,7 @@ async function importConfigFromClipboard() {
             ]"
              @click="handleWordClick(item.word, $event)"
              @contextmenu.prevent="(e) => { activeWord = item.word; calculatePanelPosition(e); }"
+             @mouseenter="handleWordHover(item.word)"
              v-for="item in wordsRandom"
              :key="item"
         >
