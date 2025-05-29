@@ -364,31 +364,41 @@ async function importConfigFromClipboard() {
 
 <template>
     <div :class="['select-container', { 'container-bottom': !isToolPanelAtTop }]">
-        <select v-model="selectedVocabulary" @change="handleVocabularyChange" class="form-select form-select-sm">
-            <optgroup v-for="(group, groupName) in VOCABULARY_IMPORTS" :key="groupName" :label="groupName">
-                <option v-for="(_, name) in group" :key="name" :value="name">{{ name }}</option>
-            </optgroup>
-        </select>
 
-        <div class="info-wrapper">
-            <div class="info-item">
-                <div class="count">{{ knownWordsSet.size }}</div>
-                <div class="label">已掌握</div>
+        <div class="logo-wrapper">
+            <img class="logo" src="./github-mark.png" alt="logo"/>
+            <a class="link" target="_blank" href="https://github.com/KyleBing/vocabulary">GITHUB: VOCABULARY</a>
+        </div>
+
+        <div class="select-content">
+            <select v-model="selectedVocabulary" @change="handleVocabularyChange" class="form-select form-select-sm">
+                <optgroup v-for="(group, groupName) in VOCABULARY_IMPORTS" :key="groupName" :label="groupName">
+                    <option v-for="(_, name) in group" :key="name" :value="name">{{ name }}</option>
+                </optgroup>
+            </select>
+
+            <div class="info-wrapper">
+                <div class="info-item">
+                    <div class="count">{{ knownWordsSet.size }}</div>
+                    <div class="label">已掌握</div>
+                </div>
+                <div class="info-item">
+                    <div class="count">{{ uncertainWordsSet.size }}</div>
+                    <div class="label">待复习</div>
+                </div>
+                <div class="info-item">
+                    <div class="count">{{ currentVocabulary.length }}</div>
+                    <div class="label">此词库</div>
+                </div>
             </div>
-            <div class="info-item">
-                <div class="count">{{ uncertainWordsSet.size }}</div>
-                <div class="label">待复习</div>
-            </div>
-            <div class="info-item">
-                <div class="count">{{ currentVocabulary.length }}</div>
-                <div class="label">此词库</div>
+            <div class="btn-wrapper">
+                <button @click="importConfigFromClipboard" class="btn btn-secondary btn-sm">导入配置</button>
+                <button @click="exportConfigToClipboard" class="btn btn-secondary btn-sm">导出配置</button>
+                <button @click="reloadPage" class="btn btn-warning btn-sm">刷新布局</button>
             </div>
         </div>
-        <div class="btn-wrapper">
-            <button @click="importConfigFromClipboard" class="btn btn-secondary btn-sm">导入配置</button>
-            <button @click="exportConfigToClipboard" class="btn btn-secondary btn-sm">导出配置</button>
-            <button @click="reloadPage" class="btn btn-warning btn-sm">刷新布局</button>
-        </div>
+
+
 
         <div 
             :class="['top-bottom-button', { 'up': isToolPanelAtTop, 'bottom': !isToolPanelAtTop }]"

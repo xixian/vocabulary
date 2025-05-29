@@ -109,11 +109,9 @@
     bottom: auto;
     left: 30px;
     right: auto;
-    background: white;
-    padding: 10px;
+    //background: white;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    @include border-radius(10px);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -123,19 +121,60 @@
         bottom: 30px;
     }
 }
+
+
+.select-content{
+    backdrop-filter: blur(10px);
+    @include border-radius(10px);
+    padding: 10px;
+    background-color: transparentize(white, 0.1);
+}
+.logo-wrapper{
+    backdrop-filter: blur(10px);
+    @include border-radius(10px);
+    padding: 10px;
+    background-color: transparentize(white, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .logo{
+        margin-right: 10px;
+        display: block;
+        height: 20px;
+        width: 20px;
+    }
+    .link{
+        font-family: 'Galvji', sans-serif;
+        font-size: 12px;
+        text-align: center;
+        display: block;
+        color: black;
+        &:hover{
+            color: $blue;
+        }
+    }
+}
+
+
+
 .top-bottom-button{
     z-index: -1;
     position: absolute;
     left: 50%;
     display: flex;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     @include border-radius(40px);
     background-color: transparentize(white, 1);
     transition: all 0.3s ease;
+    padding: 8px;
+    svg{
+        height: 100%;
+        width: 100%;
+    }
     &:hover{
         background-color: transparentize($green, 0.1);
     }
@@ -169,7 +208,7 @@
 .info-wrapper{
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
+    padding: 15px 0;
     .info-item{
         display: flex;
         flex-flow: column nowrap;
@@ -185,5 +224,6 @@
         }
     }
 }
+
 
 @import "bootstrap-btn-form";

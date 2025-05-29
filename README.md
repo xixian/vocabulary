@@ -2,17 +2,16 @@
 
 # 蚕食单词
 
-<img width="1624" alt="Screenshot 2025-05-23 at 23 39 02" src="https://github.com/user-attachments/assets/fe0dbf24-55b7-4b2f-bf5b-052e7498b06d" />
-
+![image](https://github.com/user-attachments/assets/370feef1-2071-42ed-9cb0-fb4db0dfc5c5)
 
 
 ## 功能
-- 切换展示 初中、高中、CET4、CET6、考研、托福、SAT 词库
+- 切换展示 初中、高中、CET4、CET6、考研、托福、SAT 等词库，[词库来源](https://github.com/KyleBing/english-vocabulary)
 - 右击显示词条注释
 - 点击词条暗化它，表示已知，有点蚕食的感觉
 - <kbd>Ctrl</kbd> + 点击 = 取消标记某个词条
 - <kbd>/</kbd> + 点击 = 添加到未确定词组
-- 鼠标悬停发音 - 需要浏览器支持发音功能
+- 鼠标悬停发音 - 需要浏览器支持发音功能（初次打开页面，需要点一下页面才会发音）
 
 ## 开发
 
