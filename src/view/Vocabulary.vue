@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from "vue";
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 import Clipboard from 'clipboard';
 
 
@@ -363,26 +362,38 @@ async function importConfigFromClipboard() {
 </script>
 
 <template>
+
+
     <div class="select-container">
         <select v-model="selectedVocabulary" @change="handleVocabularyChange" class="form-select form-select-sm">
             <optgroup v-for="(group, groupName) in VOCABULARY_IMPORTS" :key="groupName" :label="groupName">
                 <option v-for="(_, name) in group" :key="name" :value="name">{{ name }}</option>
             </optgroup>
         </select>
-        <button @click="exportConfigToClipboard" class="btn btn-secondary btn-sm">导出配置</button>
-        <button @click="importConfigFromClipboard" class="btn btn-secondary btn-sm">导入配置</button>
-        <div class="card">
-            <div class="card-body">
-                <div class="text-muted text-left small">掌握: {{ knownWordsSet.size }} </div>
-                <div class="text-muted text-left small">未定: {{ uncertainWordsSet.size }} </div>
-                <div class="text-muted text-left small">词库: {{ currentVocabulary.length }}</div>
-                <hr class="my-1">
-                <div class="text-muted text-center"><a target="_blank" href="https://github.com/KyleBing/vocabulary" class="small">github</a></div>
+
+        <div class="info-wrapper">
+            <div class="info-item">
+                <div class="count">{{ knownWordsSet.size }}</div>
+                <div class="label">掌握</div>
+            </div>
+            <div class="info-item">
+                <div class="count">{{ uncertainWordsSet.size }}</div>
+                <div class="label">待复习</div>
+            </div>
+            <div class="info-item">
+                <div class="count">{{ currentVocabulary.length }}</div>
+                <div class="label">词库</div>
             </div>
         </div>
-        <button @click="reloadPage" class="btn btn-warning btn-sm">刷新布局</button>
+        <div class="btn-wrapper">
+            <button @click="importConfigFromClipboard" class="btn btn-secondary btn-sm">导入配置</button>
+            <button @click="exportConfigToClipboard" class="btn btn-secondary btn-sm">导出配置</button>
+            <button @click="reloadPage" class="btn btn-warning btn-sm">刷新布局</button>
 
+        </div>
     </div>
+
+
     <div class="word-list">
         <div :class="[
                 'word-item',
@@ -417,120 +428,5 @@ async function importConfigFromClipboard() {
 </template>
 
 <style scoped lang="scss">
-@import "../scss/plugin";
-.word-list{
-    padding: 20px 10px 300px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    .word-item{
-        position: relative;
-        @include border-radius(10px);
-        font-size: 24px;
-        cursor: pointer;
-        padding: 8px 15px;
-        line-height: 1;
-        color: white;
-        &:hover{
-            background-color: transparentize(white, 0.9);
-            .translation-panel {
-                display: block;
-            }
-        }
-        &:active{
-            background-color: transparentize(white, 0.5);
-        }
-        &.known{
-            color: transparentize(white, 0.8);
-        }
-        &.uncertain{
-            color: $green;
-            //color: $orange;
-        }
-
-        .word{
-            @extend .unselectable;
-            // Add any specific styles for the word if needed
-        }
-
-    }
-}
-
-.translation-panel{
-    //border: 1px solid transparentize(white, 0.9);
-    border: 1px solid transparentize(white, 0.7);
-    min-width: 300px;
-    color: white;
-    z-index: 100;
-    padding: 5px 5px;
-    @include border-radius(9px);
-    background-color: transparentize(black, 0.2);
-    backdrop-filter: blur(10px);
-    line-height: 1.3;
-    text-align: center;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    font-size: 1rem;
-    display: none; // Hide translation by default
-}
-
-.sentence-list{
-    padding: 5px;
-}
-
-.sentence-item{
-    @include border-radius(5px);
-    border: 1px solid transparentize(white, 0.9);
-    padding: 3px 5px;
-    background-color: transparentize(white, 0.95);
-    margin-bottom: 6px;
-    text-align: left;
-    &:last-child{
-        margin-bottom: 0;
-    }
-    .sentence-en{
-        margin-bottom: 3px;
-        line-height: 1.3;
-        font-size: 1rem;
-        font-family: Arial, sans-serif;
-    }
-    .sentence-cn{
-        color: $text-subtitle;
-        font-size: 0.9rem;
-    }
-}
-
-.translation-list{
-}
-.translation-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    .type{
-        width: 30px;
-        flex-shrink: 0;
-        color: $green;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    .translation{
-        flex-grow: 1;
-        text-align: left;
-    }
-}
-
-
-
-.select-container {
-    z-index: 999;
-    text-align: center;
-    position: fixed;
-    top: 30px;
-    left: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
+@import "vocabulary";
 </style>
