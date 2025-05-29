@@ -135,7 +135,7 @@ function speakWord(word: string) {
         
         const utterance = new SpeechSynthesisUtterance(word);
         utterance.lang = 'en-US'; // 设置为英语
-        utterance.rate = 0.8; // 语速稍慢一点
+        utterance.rate = 1; // 语速稍慢一点
         utterance.volume = 0.7; // 音量
         
         window.speechSynthesis.speak(utterance);
@@ -158,6 +158,7 @@ const isCtrlPressed = ref(false);
 const isSlashPressed = ref(false); // Track if / is pressed
 const activeWord = ref<string | null>(null);
 const panelPosition = ref({ left: 0 });
+const isToolPanelAtTop = ref(true); // Add new ref for container position
 
 // Add a ref for the selected vocabulary name
 const selectedVocabulary = ref('初中')
@@ -362,9 +363,7 @@ async function importConfigFromClipboard() {
 </script>
 
 <template>
-
-
-    <div class="select-container">
+    <div :class="['select-container', { 'container-bottom': !isToolPanelAtTop }]">
         <select v-model="selectedVocabulary" @change="handleVocabularyChange" class="form-select form-select-sm">
             <optgroup v-for="(group, groupName) in VOCABULARY_IMPORTS" :key="groupName" :label="groupName">
                 <option v-for="(_, name) in group" :key="name" :value="name">{{ name }}</option>
@@ -374,7 +373,7 @@ async function importConfigFromClipboard() {
         <div class="info-wrapper">
             <div class="info-item">
                 <div class="count">{{ knownWordsSet.size }}</div>
-                <div class="label">掌握</div>
+                <div class="label">已掌握</div>
             </div>
             <div class="info-item">
                 <div class="count">{{ uncertainWordsSet.size }}</div>
@@ -382,14 +381,24 @@ async function importConfigFromClipboard() {
             </div>
             <div class="info-item">
                 <div class="count">{{ currentVocabulary.length }}</div>
-                <div class="label">词库</div>
+                <div class="label">此词库</div>
             </div>
         </div>
         <div class="btn-wrapper">
             <button @click="importConfigFromClipboard" class="btn btn-secondary btn-sm">导入配置</button>
             <button @click="exportConfigToClipboard" class="btn btn-secondary btn-sm">导出配置</button>
             <button @click="reloadPage" class="btn btn-warning btn-sm">刷新布局</button>
+        </div>
 
+        <div 
+            :class="['top-bottom-button', { 'up': isToolPanelAtTop, 'bottom': !isToolPanelAtTop }]"
+            @click="isToolPanelAtTop = !isToolPanelAtTop" >
+            <svg v-if="isToolPanelAtTop" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 16 16">
+                <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 16 16">
+                <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+            </svg>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 @import "../scss/plugin";
 .word-list{
-    padding: 20px 10px 300px;
+    padding: 40px 10px 300px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -104,18 +104,53 @@
 
 
 .select-container {
-    background-color: white;
-    z-index: 999;
-    text-align: center;
     position: fixed;
     top: 30px;
+    bottom: auto;
     left: 30px;
+    right: auto;
+    background: white;
     padding: 10px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     @include border-radius(10px);
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    &.container-bottom {
+        top: auto;
+        bottom: 30px;
+    }
 }
+.top-bottom-button{
+    z-index: -1;
+    position: absolute;
+    left: 50%;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    @include border-radius(40px);
+    background-color: transparentize(white, 1);
+    transition: all 0.3s ease;
+    &:hover{
+        background-color: transparentize($green, 0.1);
+    }
+    &.up{
+        top: auto;
+        bottom: 0;
+        transform: translateX(-50%) translateY(120%);
+    }
+    &.bottom{
+        top: 0;
+        bottom: auto;
+        transform: translateX(-50%) translateY(-120%);
+    }
+}
+
 
 .btn-wrapper{
     display: flex;
@@ -145,6 +180,7 @@
             font-family: 'Galvji', sans-serif;
         }
         .label{
+            color: $text-subtitle;
             font-size: 13px;
         }
     }
