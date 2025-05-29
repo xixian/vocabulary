@@ -162,15 +162,16 @@
     position: absolute;
     left: 50%;
     display: flex;
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 20px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     @include border-radius(40px);
-    background-color: transparentize(white, 1);
+    background-color: transparentize(white, 0.9);
     transition: all 0.3s ease;
-    padding: 8px;
+    backdrop-filter: blur(10px);
+    padding: 3px 8px;
     svg{
         height: 100%;
         width: 100%;
@@ -181,12 +182,12 @@
     &.up{
         top: auto;
         bottom: 0;
-        transform: translateX(-50%) translateY(120%);
+        transform: translateX(-50%) translateY(130%);
     }
     &.bottom{
         top: 0;
         bottom: auto;
-        transform: translateX(-50%) translateY(-120%);
+        transform: translateX(-50%) translateY(-130%);
     }
 }
 
